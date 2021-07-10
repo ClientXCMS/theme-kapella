@@ -1,0 +1,31 @@
+{% extends "layout.twig" %}
+
+{% block title group.name %}
+{% set token = csrf_input() %}
+{% block body %}
+
+	<div class="main-panel">
+		<div class="content-wrapper">
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-body">
+							<div class="container text-center pt-5">
+								<h4 class="mb-3 mt-5">{{  group.name }}</h4>
+								<p class="w-75 mx-auto mb-5">{{ group.headline }}</p>
+								<div class="row pricing-table">
+
+									{% for row in products | batch(3) %}
+										{% for product in row  %}
+											{% include "@shop/product/card.twig" %}
+										{% endfor %}
+									{% endfor %}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

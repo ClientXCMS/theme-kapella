@@ -1,0 +1,93 @@
+
+		<div class="horizontal-menu">
+			<nav class="navbar top-navbar col-lg-12 col-12 p-0">
+				<div class="container-fluid">
+					<div class="navbar-menu-wrapper d-flex align-items-center justify-content-between">
+						<ul class="navbar-nav navbar-nav-left">
+							<li class="nav-item dropdown">
+								<a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown" href="#" data-toggle="dropdown">
+									<i class="fas fa-language mx-0"></i>
+								</a>
+								<div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
+									{% for k, locale in config('app.locales') %}
+									<a class="dropdown-item preview-item {{ _locale == k ? 'active' : '' }}" href="{{ path('account.locale', {locale: k})}}">
+										<div class="preview-thumbnail">
+											<img src="https://www.countryflags.io/{{ k | split('_')[1] | lower }}/flat/64.png" alt="image" class="profile-pic">
+										</div>
+										<div class="preview-item-content flex-grow">
+											<h6 class="preview-subject ellipsis font-weight-normal">{{ locale }}
+											</h6>
+										</div>
+									</a>
+									{% endfor %}
+								</div>
+							</li>
+
+							<li class="nav-item dropdown">
+									<a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center" id="notificationDropdown" href="#" data-toggle="dropdown">
+										<i class="far fa-envelope mx-0"></i>
+										<span class="count bg-success">{{ mail_messages | length }}</span>
+									</a>
+								<div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+									<p class="mb-0 font-weight-normal float-left dropdown-header">{{ trans("account.emails.title")}}</p>
+
+									{% for mail in mail_messages %}
+
+
+										<a class="preview-item-content" href="{{ path('account.emails.show', {id: mail.id}) }}">
+											<h6 class="preview-subject font-weight-normal">{{ mail.data.subject }}</h6>
+											<p class="font-weight-light small-text mb-0 text-muted">
+												{{ mail.createdAt | ago }}
+											</p>
+										</a>
+									{% endfor %}
+								</div>
+							</li>
+
+						</ul>
+						<div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+							<a class="navbar-brand brand-logo" href="{{ path('account') }}"><img {{ config('app.logo') != null ? 'style="height:auto;"' : ''}} src="{{ config('app.logo') != null ? config('app.logo') : theme_asset('images/logo.svg') }}" alt="logo"/></a>
+							<a class="navbar-brand brand-logo-mini" href="{{ path('account') }}"><img {{ config('app.logo') != null ? 'style="height:auto;"' : ''}} src="{{ config('app.logo') != null ? config('app.logo') : theme_asset('images/logo-mini.svg') }}" alt="logo"/></a>
+						</div>
+						<ul class="navbar-nav navbar-nav-right">
+
+							{% if is_admin() %}
+							<li class="nav-item dropdown  d-lg-flex d-none">
+								<a href="{{ path('auth.admin') }}" class="btn btn-inverse-primary btn-sm">{{  trans("admin.backtoadmin") }} </a>
+							</li>
+							{% endif %}
+
+							<li class="nav-item nav-profile dropdown">
+								<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+									<span class="nav-profile-name">{{ trans("hello", {'%name%': current_user().name})}}</span>
+									<span class="online-status"></span>
+									<img src="{{  theme_asset('images/faces/face28.png') }}" alt="profile"/>
+								</a>
+								<div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+
+									<a href="{{ path('account.details')}}" class="dropdown-item has-icon">
+										<i class="fa fa-user-edit"></i> <span>{{ trans("account.details.title") }}</span>
+									</a>
+									<a href="{{ path('account.emails')}}" class="dropdown-item has-icon">
+										<i class="fa fa-envelope"></i> <span>{{ trans("account.emails.title") }}</span>
+									</a>
+									<a href="{{ path('account.activity')}}" class="dropdown-item has-icon">
+										<i class="fa fa-chart-line"></i> <span>{{ trans("account.activity.title")}}</span>
+									</a>
+								</div>
+							</li>
+						</ul>
+						<button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="horizontal-menu-toggle">
+							<span class="fas fa-bars"></span>
+						</button>
+					</div>
+				</div>
+			</nav>
+			<nav class="bottom-navbar">
+				<div class="container{{ current_user() ? '-fluid' : '' }}">
+					<ul class="nav page-navigation">
+						{{ navigation('main_menu') }}
+					</ul>
+				</div>
+			</nav>
+		</div>

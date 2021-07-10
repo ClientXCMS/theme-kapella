@@ -1,0 +1,47 @@
+
+<div class="col-md-6 col-xl-4 grid-margin stretch-card pricing-card">
+	<div class="card border-primary border-{{ product.pinned  ? 'primary' : 'success'}} pricing-card-body" style="padding: 50px 56px 43px 56px;">
+		<div class="text-center pricing-card-head">
+			<h3>{{ product.name }}</h3>
+			<p>{{ product.price(product.toRecurring().name) | formatted_price(true) | trans}} / {{ trans(product.paymenttype)}}</p>
+			<h1 class="font-weight-normal mb-4">
+				{% if product.discounted %}
+					<del>
+						{{ product.originalPrice(product.toRecurring().name) | formatted_price(true) | trans }}</del>
+					/
+					{{ trans(product.paymenttype) }}
+				{% endif %}</h1>
+		</div>
+		<ul class="list-unstyled plan-features">
+			{{ product.description  | raw}}
+		</ul>
+		<div class="wrapper">
+
+			{% if product.stockcontrol == "0" or (product.stockcontrol == '1' and product.stock != 0) %}
+				{% if module_is_enabled('Basket') %}
+					<form method="POST" action="{{ path('basket.add', {id: product.id})}}">
+						{{ token | raw }}
+						{% if basket_row(product) %}
+							<input type="hidden" name="quantity" value="{{ basket_row(product).quantity }}">
+							<input type="hidden" name="billing" value="{{ basket_row(product).billing }}">
+						{% endif %}
+						<button class="btn btn-lg btn-block btn-info">
+							{{ trans("add_cart")}}
+							<i class="fas fa-arrow-right"></i>
+						</button>
+					</form>
+				{% else %}
+					<a class="btn btn-lg btn-block btn-info" href="{{ path('shop.checkout', {id: product.id})}}">
+						{{ trans("buy")}}
+						<i class="fas fa-arrow-right"></i>
+					</a>
+				{% endif %}
+			{% else %}
+
+				<button class="btn btn-lg btn-block btn-info" type="button">
+					{{ trans("out_stock")}}<i class="fas fa-time"></i>
+				</button>
+			{% endif %}
+		</div>
+	</div>
+</div>
