@@ -1,4 +1,3 @@
-
 {% if current_user() %}
     {% for item in online %}
         <li class="nav-item {{ is_subpath(item.route)  ? 'active' : '' }}">
@@ -34,9 +33,9 @@
         </li>
     {% endfor %}
 {% endif %}
-
 {% for item in global %}
-    <li class="nav-item {% if item.route == 'account' %} {{ is_path(item.route) or current_route == 'account'  ? 'active' : '' }} {% else %} {{ is_subpath(item.route)  ? 'active' : '' }} {% endif %}">
+
+    <li class="nav-item   {% if item.route == 'account' %} {{ is_path(item.route)  ? 'active' : '' }} {% else %} {{ is_subpath(item.route)  ? 'active' : '' }} {% endif %}">
         <a class="nav-link " href="{{ path(item.route) }}">
             <i class="{{ item.icon }} menu-icon"></i>
             <span class="menu-title">
