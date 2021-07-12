@@ -10,7 +10,7 @@ class KapellaTheme implements ThemeInterface
 
     public function getName(): string
     {
-        return "Stisla";
+        return "Kapella";
     }
     
     public function getVersion(): ?string

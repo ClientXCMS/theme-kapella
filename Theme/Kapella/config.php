@@ -1,5 +1,5 @@
 <?php
-use Themes\Stisla\KapellaTheme;
+use Themes\Kapella\KapellaTheme;
 
 return [
     'class' => KapellaTheme::class
