@@ -36,126 +36,126 @@
                         <div class="card-body">
                             <div class="item d-flex align-items-center">
                                 <div class="image" style="margin: 5px">
-                                    <img src="{{ theme_asset("img/service.png") }}" alt="..." class="img-fluid rounded-circle"></div>
-                                    <div class="text">
-                                        <a href="#">
-                                            <h3 class="h5">
-                                                {{ item.name }}
-                                                x
-                                                {{ item.quantity }}
-                                            </h3>
+                                    <img src="{{ theme_global("service.png") }}" alt="..."
+                                         class="img-fluid rounded-circle"></div>
+                                <div class="text">
+                                    <a href="#">
+                                        <h3 class="h5">
+                                            {{ item.name }}
+                                            x
+                                            {{ item.quantity }}
+                                        </h3>
 
-                                            {% if order.items[loop.index0].data['_coupon'] %}
-                                                <span class="badge badge-primary float-right">{{  trans("coupon") }} : {{  order.items[loop.index0].data['_coupon'].name }}</span>
-                                            {% endif %}
-                                        </a>
-                                        <small>
-                                            {% if order.state == constant('CANCELLED', order) %}
-                                                {{ trans("return.Cancelled.state") }}
+                                        {% if order.items[loop.index0].data['_coupon'] %}
+                                            <span class="badge badge-primary float-right">{{ trans("coupon") }} : {{ order.items[loop.index0].data['_coupon'].name }}</span>
+                                        {% endif %}
+                                    </a>
+                                    <small>
+                                        {% if order.state == constant('CANCELLED', order) %}
+                                            {{ trans("return.Cancelled.state") }}
+                                        {% else %}
+                                            {% if item.delivred == '0' %}
+                                                {{ trans("ordershow.items.pending") }}
                                             {% else %}
-                                                {% if item.delivred == '0' %}
-                                                    {{ trans("ordershow.items.pending") }}
-                                                {% else %}
-                                                    {% if item.delivred %}
-                                                        {{ trans("ordershow.items.delivred", {"%date%": date}) }}
-                                                    {% endif %}
+                                                {% if item.delivred %}
+                                                    {{ trans("ordershow.items.delivred", {"%date%": date}) }}
+                                                {% endif %}
 
-                                                    {% if item.refunded %}
-                                                        {{ trans("ordershow.items.refunded", {"%date%": date}) }}
-                                                    {% endif %}
+                                                {% if item.refunded %}
+                                                    {{ trans("ordershow.items.refunded", {"%date%": date}) }}
                                                 {% endif %}
                                             {% endif %}
-                                        </small>
-                                    </div>
+                                        {% endif %}
+                                    </small>
                                 </div>
-                                <div class="col">
-                                    <div class="">
-                                        <table class="table table-striped">
-                                            <tbody>
-                                                <tr>
-                                                    <td class="text-right">
-                                                        <strong>
-                                                            {{ trans("setupfee") }}
-                                                        </strong>
-                                                    </td>
-                                                    <td class="text-right" id="setupfee">
-                                                        {{ item.setupfee | formatted_price(true, 'none') | trans }}
-                                                        {% if item.setupfee != item.originalSetupfee %}
-                                                            (
-                                                            {{ item.originalSetupfee | formatted_price(true, 'none') | trans }}
-                                                            )
-                                                        {% endif %}
-                                                    </td>
+                            </div>
+                            <div class="col">
+                                <div class="">
+                                    <table class="table table-striped">
+                                        <tbody>
+                                        <tr>
+                                            <td class="text-right">
+                                                <strong>
+                                                    {{ trans("setupfee") }}
+                                                </strong>
+                                            </td>
+                                            <td class="text-right" id="setupfee">
+                                                {{ item.setupfee | formatted_price(true, 'none') | trans }}
+                                                {% if item.setupfee != item.originalSetupfee %}
+                                                    (
+                                                    {{ item.originalSetupfee | formatted_price(true, 'none') | trans }}
+                                                    )
+                                                {% endif %}
+                                            </td>
 
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-right">
-                                                        <strong>
-                                                            {{ trans("qty") }}
-                                                        </strong>
-                                                    </td>
-                                                    <td class="text-right" id="quantity">
-                                                        {{ item.quantity }}
-                                                        {{ trans("unit") }}
-                                                    </td>
-                                                </tr>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-right">
+                                                <strong>
+                                                    {{ trans("qty") }}
+                                                </strong>
+                                            </td>
+                                            <td class="text-right" id="quantity">
+                                                {{ item.quantity }}
+                                                {{ trans("unit") }}
+                                            </td>
+                                        </tr>
 
-                                                <tr>
-                                                    <td class="text-right">
-                                                        <strong>
-                                                            {{ trans("discount") }}
-                                                        </strong>
-                                                    </td>
-                                                    <td class="text-right" id="discount">
-                                                        {{ (item.price - item.originalPrice) | formatted_price(true, 'none') }}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-right">
-                                                        <strong>
-                                                            {{ trans("tax") }}
-                                                        </strong>
-                                                    </td>
-                                                    <td class="text-right" id="tax">
-                                                        {{ item.vat }}
-                                                        %
-                                                                                                                                                                                													
-                                                                                                                                                                            
-                                                                                                                    
-                                                    </td>
-                                                </tr>
+                                        <tr>
+                                            <td class="text-right">
+                                                <strong>
+                                                    {{ trans("discount") }}
+                                                </strong>
+                                            </td>
+                                            <td class="text-right" id="discount">
+                                                {{ (item.price - item.originalPrice) | formatted_price(true, 'none') }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-right">
+                                                <strong>
+                                                    {{ trans("tax") }}
+                                                </strong>
+                                            </td>
+                                            <td class="text-right" id="tax">
+                                                {{ item.vat }}
+                                                %
 
-                                                <tr>
-                                                    <td class="text-right">
-                                                        <strong>
-                                                            {{ trans("price") }}
-                                                        </strong>
-                                                    </td>
-                                                    <td class="text-right" id="price">
-                                                        {{ item.price | formatted_price(true) }}
-                                                    </td>
 
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-right">
-                                                        <strong>
-                                                            {{ trans("total") }}
-                                                        </strong>
-                                                    </td>
-                                                    <td class="text-right" id="total">
-                                                        {{ item.priceWithTax | formatted_price(true) }}
-                                                    </td>
+                                            </td>
+                                        </tr>
 
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                        <tr>
+                                            <td class="text-right">
+                                                <strong>
+                                                    {{ trans("price") }}
+                                                </strong>
+                                            </td>
+                                            <td class="text-right" id="price">
+                                                {{ item.price | formatted_price(true) }}
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td class="text-right">
+                                                <strong>
+                                                    {{ trans("total") }}
+                                                </strong>
+                                            </td>
+                                            <td class="text-right" id="total">
+                                                {{ item.priceWithTax | formatted_price(true) }}
+                                            </td>
+
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-                {% endfor %}
-            </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
-</div></div>{% endblock %}
+    </div>
+    </div></div>{% endblock %}
